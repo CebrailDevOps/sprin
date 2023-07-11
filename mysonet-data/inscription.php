@@ -59,7 +59,7 @@ if (!preg_match('/^[a-zA-Z0-9_-]{2,50}$/', $idmysonet)) {
 $file_content=shell_exec("sudo ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null inspectorsonet@" . $secure_ip . " 'cat /home/inspectorsonet/idmysonet' | tail -n 1");
 
 if (trim($file_content) != $idmysonet) {
-    die("L'ID MySonet ne correspond pas à l'ID MySonet de votre serveur.");
+    die("L'ID MySonet ne correspond pas à celui de votre serveur.");
 }
 
 // Insérez le nouvel utilisateur dans la base de données
