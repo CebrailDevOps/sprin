@@ -1,0 +1,22 @@
+version: '3.3'
+
+services:
+  web:
+    image: mysonet-php:test
+    volumes:
+      - ./mysonet-data:/var/www/html
+      - /home/mysonet/.ssh:/root/.ssh:ro
+    ports:
+      - 80:80
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0.33
+    volumes:
+      - ./mysonet-mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456a.
+      MYSQL_DATABASE: mysonet
+      MYSQL_USER: mysonet
+      MYSQL_PASSWORD: 123456a.
