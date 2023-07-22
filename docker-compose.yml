@@ -12,7 +12,7 @@ services:
       - db
 
   db:
-    image: mysql:8.0.33
+    image: mariadb:10.11.4
     volumes:
       - ./mysonet-mysql:/var/lib/mysql
     environment:
