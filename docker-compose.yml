@@ -13,10 +13,11 @@ services:
 
   db:
     image: mariadb:10.11.4
+    restart: always
     volumes:
       - ./mysonet-mysql:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: 123456a.
-      MYSQL_DATABASE: mysonet
-      MYSQL_USER: mysonet
-      MYSQL_PASSWORD: 123456a.
+      - MARIADB_ROOT_PASSWORD=123456a.
+      - MARIADB_DATABASE=mysonet
+      - MARIADB_USER=mysonet
+      - MARIADB_PASSWORD=123456a.
