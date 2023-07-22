@@ -4,7 +4,7 @@ services:
   web:
     image: mysonet-php:test
     volumes:
-      - ./mysonet-data:/var/www/html
+      - /home/mysonet/mysonet-data:/var/www/html
       - /home/mysonet/.ssh:/root/.ssh:ro
     ports:
       - 80:80
@@ -15,7 +15,7 @@ services:
     image: mariadb:10.11.4
     restart: always
     volumes:
-      - ./mysonet-mysql:/var/lib/mysql
+      - /home/mysonet/mysonet-mysql:/var/lib/mysql
     environment:
       - MARIADB_ROOT_PASSWORD=123456a.
       - MARIADB_DATABASE=mysonet
