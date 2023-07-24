@@ -32,7 +32,11 @@
 
     // Afficher les résultats
     while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        echo htmlspecialchars($row['username'], ENT_QUOTES, 'UTF-8') . " <button>Demander en ami</button><br>";
+        echo htmlspecialchars($row['username'], ENT_QUOTES, 'UTF-8') . " 
+        <form method='post' action='ajouterami.php'>
+            <input type='hidden' name='ami_pseudo' value='". htmlspecialchars($row['username'], ENT_QUOTES, 'UTF-8') ."'>
+            <button type='submit'>Demander en ami</button>
+        </form><br>";
     }
     if ($stmt->rowCount() == 0) {
         echo "Aucun utilisateur trouvé avec le pseudo '$pseudo'.";
