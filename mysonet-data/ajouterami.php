@@ -49,6 +49,38 @@
     $ssh_command = 'sudo ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null inspectorsonet@' . $secure_ami>
     shell_exec($ssh_command);
 
+    // Lire la dernière ligne du fichier demandes_en_attente
+    $last_line_command = 'sudo ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null inspectorsonet@' . $secure_ami_ip . ' tail -n 1 /home/inspectorsonet/demandes_en_attente';
+    $last_line = shell_exec($last_line_command);
+
+    // Extraire le pseudo de la dernière ligne
+    $last_request_pseudo = explode(';', $last_line)[0];
+
+    // Vérifier que la demande d'ami a été correctement enregistrée
+    if ($last_request_pseudo !== $_SESSION['pseudo']) {
+        die("La demande d'ami n'a pas été correctement enregistrée. Veuillez réessayer.");
+    }
+
+    // Récupérer les ID des utilisateurs en fonction de leurs pseudos
+    $stmt = $pdo->prepare("SELECT id FROM mysonetusers WHERE username = ?");
+    $stmt->execute([$_SESSION['pseudo']]);
+    $demandeur_id = $stmt->fetchColumn();
+    $stmt->execute([$ami_pseudo]);
+    $demande_id = $stmt->fetchColumn();
+
+    // Vérifier si une demande d'ami similaire existe déjà
+    $stmt = $pdo->prepare("SELECT * FROM demandes_ami WHERE id_demandeur = ? AND id_demande = ?");
+    $stmt->execute([$demandeur_id, $demande_id]);
+    $demande_existante = $stmt->fetch();
+
+    if ($demande_existante) {
+        die("Une demande d'ami similaire existe déjà.");
+    }
+
+    // Ajouter l'information à la table demandes_ami
+    $stmt = $pdo->prepare("INSERT INTO demandes_ami (id_demandeur, id_demande, statut) VALUES (?, ?, ?)");
+    $stmt->execute([$demandeur_id, $demande_id, "Réponse en attente"]);
+
     echo "Demande d'ami envoyée à " . htmlspecialchars($ami_pseudo, ENT_QUOTES, 'UTF-8') . ".";
 ?>
 

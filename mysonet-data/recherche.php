@@ -32,10 +32,36 @@
 
     // Afficher les résultats
     while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        echo htmlspecialchars($row['username'], ENT_QUOTES, 'UTF-8') . " 
+        // Récupérer le pseudo de l'ami potentiel
+        $ami_pseudo = htmlspecialchars($row['username'], ENT_QUOTES, 'UTF-8');
+
+        // Récupérer les ID des utilisateurs en fonction de leurs pseudos
+        $stmt2 = $dbh->prepare("SELECT id FROM mysonetusers WHERE username = ?");
+        $stmt2->execute([$_SESSION['pseudo']]);
+        $demandeur_id = $stmt2->fetchColumn();
+        $stmt2->execute([$ami_pseudo]);
+        $demande_id = $stmt2->fetchColumn();
+
+        // Vérifier si une demande d'ami existe
+        $stmt2 = $dbh->prepare("SELECT statut FROM demandes_ami WHERE id_demandeur = ? AND id_demande = ?");
+        $stmt2->execute([$demandeur_id, $demande_id]);
+        $statut_demande = $stmt2->fetchColumn();
+
+        $buttonText = "Demander en ami";
+        $buttonDisabled = "";
+
+        if ($statut_demande) {
+            $buttonText = $statut_demande;
+
+            if ($statut_demande === "Réponse en attente") {
+                $buttonDisabled = "disabled";
+            }
+        }
+
+        echo $ami_pseudo . " 
         <form method='post' action='ajouterami.php'>
-            <input type='hidden' name='ami_pseudo' value='". htmlspecialchars($row['username'], ENT_QUOTES, 'UTF-8') ."'>
-            <button type='submit'>Demander en ami</button>
+            <input type='hidden' name='ami_pseudo' value='". $ami_pseudo ."'>
+            <button type='submit' $buttonDisabled>$buttonText</button>
         </form><br>";
     }
     if ($stmt->rowCount() == 0) {
