@@ -45,10 +45,10 @@
             $last_line = shell_exec($last_line_command);
 
             // Extraire l'id de la dernière demande
-            $last_request_id = explode(';', $last_line)[0];
+            $last_request_username = explode(';', $last_line)[0];
 
             // Si les données sont correctement inscrites, mettre à jour le statut dans la base de données
-            if ($last_request_id == $demande['id_demandeur']) {
+            if ($last_request_username == $pseudo_demandeur) {
                 $stmt = $pdo->prepare("UPDATE demandes_ami SET statut = 'Réponse en attente' WHERE id_demandeur = ? AND id_demande = ?");
                 $stmt->execute([$demande['id_demandeur'], $demande['id_demande']]);
             }
