@@ -18,6 +18,12 @@
         $stmt->execute([$demande['id_demande']]);
         $ip = $stmt->fetchColumn();
 
+        // Récupérer le pseudo et l'IP du demandeur
+        $stmt = $pdo->prepare("SELECT ip_add,username FROM mysonetusers WHERE id = ?");
+        $stmt->execute([$demande['id_demandeur']]);
+        $ip_demandeur = $row['ip_add'];
+        $pseudo_demandeur = $row['username'];
+
         // Pinger l'IP avec un délai d'attente de 2 secondes
         exec("ping -c 1 -W 2 " . escapeshellarg($ip), $output, $result);
 
@@ -28,7 +34,7 @@
             $date = $date->format('Y-m-d H:i:s');
 
             // Préparer la commande SSH
-            $command = 'echo "' . $demande['id_demandeur'] . ';' . $date . '" | sudo ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null inspectorsonet@' . escapeshellarg($ip) . ' "cat >> /home/inspectorsonet/demandes_en_attente"';
+            $command = 'echo "' . $pseudo_demandeur . ';' . $ip_demandeur . ';' . $date . '" | sudo ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null inspectorsonet@' . escapeshellarg($ip) . ' "cat >> /home/inspectorsonet/demandes_en_attente"';
 
             // Exécuter la commande SSH
             shell_exec($command);
