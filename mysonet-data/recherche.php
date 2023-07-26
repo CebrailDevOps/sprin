@@ -52,10 +52,7 @@
 
         if ($statut_demande) {
             $buttonText = $statut_demande;
-
-            if ($statut_demande === "Réponse en attente") {
-                $buttonDisabled = "disabled";
-            }
+            $buttonDisabled = "disabled";
         }
 
         echo $ami_pseudo . " 

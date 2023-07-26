@@ -40,7 +40,7 @@
         //Anti-injections Commande Shell
         $secure_ip = escapeshellarg($ip);
         // l'utilisateur existe, vérification de l'IP
-        exec("ping -c 1 " . $secure_ip, $output, $result);
+        exec("ping -c 1 -W 2 " . $secure_ip, $output, $result);
         if($result == 0) {
             // vérification plus appronfondie
             $file_content=shell_exec("sudo ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null inspectorsonet@" . $secure_ip . " 'cat /home/inspectorsonet/idmysonet' | tail -n 1");
