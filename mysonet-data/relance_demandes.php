@@ -21,6 +21,7 @@
         // Récupérer le pseudo et l'IP du demandeur
         $stmt = $pdo->prepare("SELECT ip_add,username FROM mysonetusers WHERE id = ?");
         $stmt->execute([$demande['id_demandeur']]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $ip_demandeur = $row['ip_add'];
         $pseudo_demandeur = $row['username'];
 
