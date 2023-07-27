@@ -2,10 +2,10 @@ version: '3.3'
 
 services:
   web:
-    image: mysonet-php:test
+    image: cebraildevops/mysonet-php:1.0
     volumes:
       - /home/mysonet/mysonet-data:/var/www/html
-      - /home/mysonet/.ssh:/root/.ssh:ro
+      - /home/mysonet/sshkey:/root/.ssh:ro
     ports:
       - 80:80
     depends_on:
