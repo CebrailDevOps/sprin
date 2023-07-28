@@ -48,7 +48,7 @@
         $secure_ami_ip = escapeshellarg($ami_ip);
 
         // Exécuter la commande ssh
-        $ssh_command = 'sudo ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null inspectorsonet@' . $secure_ami>
+        $ssh_command = 'sudo ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null inspectorsonet@' . $secure_ami_ip . ' ' . escapeshellarg($command);
         shell_exec($ssh_command);
 
         // Lire la dernière ligne du fichier demandes_en_attente
