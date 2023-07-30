@@ -26,44 +26,6 @@
         die("L'utilisateur demandé n'existe pas.");
     }
 
-    //Anti-injections Commande Shell
-    $secure_ami_ip = escapeshellarg($ami_ip);
-
-    // Vérifiez si l'IP est valide en envoyant un ping
-    exec("ping -c 1 -W 2 " . $secure_ami_ip, $output, $result);
-
-    if ($result != 0) {
-        $statut = "En attente de reconnexion";
-    }
-
-    // Insérez le pseudo, l'IP et la date/heure dans le fichier demandes_en_attente
-    else {
-        $statut = "Réponse en attente";
-        $date = new DateTime();
-        $date = $date->format('Y-m-d H:i:s');  // Format de la date MySQL datetime
-        $request = $_SESSION['pseudo'] . ";" . $_SESSION['ip'] . ";" . $date;
-        $command = 'echo "' . $request . '" >> /home/inspectorsonet/demandes_en_attente';
-
-        // Utiliser escapeshellarg pour sécuriser l'IP de l'ami
-        $secure_ami_ip = escapeshellarg($ami_ip);
-
-        // Exécuter la commande ssh
-        $ssh_command = 'sudo ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null inspectorsonet@' . $secure_ami_ip . ' ' . escapeshellarg($command);
-        shell_exec($ssh_command);
-
-        // Lire la dernière ligne du fichier demandes_en_attente
-        $last_line_command = 'sudo ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null inspectorsonet@' . $secure_ami_ip . ' tail -n 1 /home/inspectorsonet/demandes_en_attente';
-        $last_line = shell_exec($last_line_command);
-
-        // Extraire le pseudo de la dernière ligne
-        $last_request_pseudo = explode(';', $last_line)[0];
-
-        // Vérifier que la demande d'ami a été correctement enregistrée
-        if ($last_request_pseudo !== $_SESSION['pseudo']) {
-            die("La demande d'ami n'a pas été correctement enregistrée. Veuillez réessayer.");
-        }
-    }
-
     // Récupérer les ID des utilisateurs en fonction de leurs pseudos
     $stmt = $pdo->prepare("SELECT id FROM mysonetusers WHERE username = ?");
     $stmt->execute([$_SESSION['pseudo']]);
@@ -80,10 +42,56 @@
         die("Une demande d'ami similaire existe déjà.");
     }
 
-    // Ajouter l'information à la table demandes_ami
-    $stmt = $pdo->prepare("INSERT INTO demandes_ami (id_demandeur, id_demande, statut) VALUES (?, ?, ?)");
-    $stmt->execute([$demandeur_id, $demande_id, $statut]);
+    //Anti-injections Commande Shell
+    $secure_ami_ip = escapeshellarg($ami_ip);
 
+    // Créer une référence pour la demande
+    $ref_demande = bin2hex(random_bytes(16));
+
+    // Vérifiez si l'IP est valide en envoyant un ping
+    exec("ping -c 1 -W 2 " . $secure_ami_ip, $output, $result);
+
+    if ($result != 0) {
+        $statut = "En attente de reconnexion";
+    }
+
+    // Insérez le pseudo, l'IP, la date/heure et une référence dans le fichier demandes_en_attente
+    else {
+        $statut = "Réponse en attente";
+        $date = new DateTime();
+        $date = $date->format('Y-m-d H:i:s');  // Format de la date MySQL datetime
+        $request = $ref_demande . ";" . $_SESSION['pseudo'] . ";" . $_SESSION['ip'] . ";" . $date;
+        $command = 'echo "' . $request . '" >> /home/inspectorsonet/demandes_en_attente';
+
+        // Utiliser escapeshellarg pour sécuriser l'IP de l'ami
+        $secure_ami_ip = escapeshellarg($ami_ip);
+
+        // Exécuter la commande ssh
+        $ssh_command = 'sudo ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null inspectorsonet@' . $secure_ami_ip . ' ' . escapeshellarg($command);
+        shell_exec($ssh_command);
+
+        // Lire la dernière ligne du fichier demandes_en_attente
+        $last_line_command = 'sudo ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null inspectorsonet@' . $secure_ami_ip . ' tail -n 1 /home/inspectorsonet/demandes_en_attente';
+        $last_line = shell_exec($last_line_command);
+
+        // Extraire la référence de la dernière ligne
+        $last_request = explode(';', trim($last_line))[0];
+
+        // Vérifier que la demande d'ami a été correctement enregistrée
+        if ($last_request !== $ref_demande) {
+            die("La demande d'ami n'a pas été correctement enregistrée. Veuillez réessayer.");
+        }
+    }
+
+    // Ajouter l'information à la table demandes_ami
+    $stmt = $pdo->prepare("INSERT INTO demandes_ami (id_demandeur, id_demande, statut, ref_demande) VALUES (?, ?, ?, ?)");
+    $stmt->execute([$demandeur_id, $demande_id, $statut, $ref_demande]);
+
+    // Communiquer la référence au demande
+    $command = 'echo "' . $ref_demande . '" >> /home/inspectorsonet/demandes_envoyees';
+    $ssh_command = 'sudo ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null inspectorsonet@' . $_SESSION['ip'] . ' ' . escapeshellarg($command);
+    shell_exec($ssh_command);
+    
     echo "Demande d'ami envoyée à " . htmlspecialchars($ami_pseudo, ENT_QUOTES, 'UTF-8') . ".";
 ?>
 
