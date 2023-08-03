@@ -13,7 +13,7 @@ if (isset($_GET['ref_demande'])) {
 
         if (isset($_GET['ip_add'])) {
             $ip_add = $_GET['ip_add'];
-            header('Location: http://'.$ip_add.'/accepte2.php?'.$ref_demande);
+            header('Location: http://'.$ip_add.'/accepte2.php?ref_demande='.$ref_demande);
         }
     } catch(PDOException $e) {
         echo "Connection failed: " . $e->getMessage();
