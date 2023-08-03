@@ -2,16 +2,22 @@
 <html>
 <head>
     <title>Inscription</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <form action="inscription.php" method="post">
-        <label for="pseudo">Pseudo:</label><br>
-        <input type="text" id="pseudo" name="pseudo" minlength="5" required><br>
-        <label for="ip">IP:</label><br>
-        <input type="text" id="ip" name="ip" required><br>
-        <label for="id">ID MySonet:</label><br>
-        <input type="text" id="idmysonet" name="idmysonet" required><br>
-        <input type="submit" value="S'inscrire">
-    </form>
+    <div class="header">
+        MySoNet.Online
+    </div>
+    <div class="container">
+        <form action="inscription.php" method="post">
+            <label for="pseudo">Pseudo:</label><br>
+            <input type="text" id="pseudo" name="pseudo" minlength="5" required><br>
+            <label for="ip">IP:</label><br>
+            <input type="text" id="ip" name="ip" required><br>
+            <label for="id">ID MySoNet:</label><br>
+            <input type="text" id="idmysonet" name="idmysonet" required><br>
+            <input type="submit" value="S'inscrire">
+        </form>
+    </div>
 </body>
 </html>
