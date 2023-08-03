@@ -1,24 +1,33 @@
 <?php
-    // Commencer la session
     session_start();
+
+    echo '<!DOCTYPE html>
+          <html>
+          <head>
+              <title>Recherche - MySoNet.Online</title>
+              <link rel="stylesheet" href="styles.css">
+          </head>
+          <body>
+              <div class="header">MySoNet.Online</div>
+              <div class="container">';
 
     // Vérifier si l'utilisateur est connecté
     if(!isset($_SESSION['pseudo']) || !isset($_SESSION['ip'])) {
-        echo "Vous devez être connecté pour rechercher de nouveaux amis. <a href='rechercher.php'>Retour à la page de connexion</a>";
-        echo "<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 5000);</script>";
+        echo "<h3>Vous devez être connecté pour rechercher de nouveaux amis. <a href='rechercher.php'>Retour à la page de connexion</a>";
+        echo "<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 3000);</script></h3></div></body>";
         exit();
     }
 
     // Vérifier le formulaire
     $pseudo = $_POST['pseudo'];
     if (!isset($pseudo)) {
-        echo "Aucun pseudo fourni. <a href='rechercher.php'>Retour à la page de connexion</a>";
-        echo "<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 5000);</script>";
+        echo "<h3>Aucun pseudo fourni. <a href='rechercher.php'>Retour à la page de connexion</a>";
+        echo "<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 3000);</script></h3></div></body>";
         exit();
     }
 
     if (!preg_match('/^[a-zA-Z0-9_-]{2,50}$/', $pseudo)) {
-        die("Le pseudo contient des caractères non autorisés ou n'a pas la longueur requise. Exemple : MonPseudo_1234");
+        die("<h3>Le pseudo contient des caractères non autorisés ou n'a pas la longueur requise. Exemple : MonPseudo_1234<br>Vous allez être redirigé...</h3></div></body>");
     }
 
     // Connexion à la base de données
@@ -55,14 +64,15 @@
             $buttonDisabled = "disabled";
         }
 
-        echo $ami_pseudo . " 
-        <form method='post' action='ajouterami.php'>
-            <input type='hidden' name='ami_pseudo' value='". $ami_pseudo ."'>
-            <button type='submit' $buttonDisabled>$buttonText</button>
-        </form><br>";
+        echo '<div class="friend-request">
+            <h3 class="friend-name">' . $ami_pseudo . '</h3>
+            <form class="friend-form" method="post" action="ajouterami.php">
+                <input type="hidden" name="ami_pseudo" value="' . $ami_pseudo . '">
+                <button class="friend-button" type="submit" ' . $buttonDisabled . '>' . $buttonText . '</button>
+            </form></div>';
     }
     if ($stmt->rowCount() == 0) {
-        echo "Aucun utilisateur trouvé avec le pseudo '$pseudo'.";
+        echo "<h3>Aucun utilisateur trouvé avec le pseudo '$pseudo'.</h3>";
     }
-    echo "<a href='rechercher.php'>Retour à la page de recherche</a>";
+    echo '</div><div class="content"><a href="rechercher.php">Retour à la page de recherche</a></div></body></html>';
 ?>

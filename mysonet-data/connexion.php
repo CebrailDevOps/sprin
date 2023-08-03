@@ -1,5 +1,4 @@
 <?php
-    // Commencer la session
     session_start();
 
     // Rediriger vers recherche.php si l'utilisateur est déjà connecté
@@ -13,17 +12,29 @@
     $ip = $_POST['ip'];
     $idmysonet = $_POST['idmysonet'];
 
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Connexion et Recherche - MySoNet.Online</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header">MySoNet.Online</div>
+    <div class="container"><h3>
+<?php
     // Validation des entrées
     if (!preg_match('/^[a-zA-Z0-9_-]{2,50}$/', $pseudo)) {
-        die("Le pseudo contient des caractères non autorisés ou n'a pas la longueur requise. Exemple : MonPseudo_1234");
+        die("Le pseudo contient des caractères non autorisés ou n'a pas la longueur requise.<br>Exemple : MonPseudo_1234<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 3000);</script><br>Vous allez être redirigé...");
     }
 
     if (!filter_var($ip, FILTER_VALIDATE_IP)) {
-        die("L'adresse IP n'est pas valide.");
+        die("L'adresse IP n'est pas valide.<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 3000);</script><br>Vous allez être redirigé...");
     }
 
     if (!preg_match('/^[a-zA-Z0-9_-]{2,50}$/', $idmysonet)) {
-        die("L'ID MySonet contient des caractères non autorisés ou n'a pas la longueur requise. Exemple : MonID_1234");
+        die("L'ID MySonet contient des caractères non autorisés ou n'a pas la longueur requise.<br>Exemple : MonID_1234<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 3000);</script><br>Vous allez être redirigé...");
     }
 
     // Connexion à la base de données
@@ -50,15 +61,18 @@
                 // stocker l'information de connexion dans la session
                 $_SESSION['pseudo'] = $pseudo;
                 $_SESSION['ip'] = $ip;
-            } else { echo "L'ID MySonet ne correspond pas à l'ID MySonet de votre serveur."; }
+            } else { echo "L'ID MySonet ne correspond pas à l'ID MySonet de votre serveur.<br>Vous allez être redirigé..."; }
         } else {
             // l'IP n'est pas valide
-            echo "L'IP n'est pas valide.";
+            echo "L'IP n'est pas valide.<br>Vous allez être redirigé...";
         }
     } else {
         // l'utilisateur n'existe pas
-        echo "Pseudo ou IP invalide.";
+        echo "Pseudo ou IP invalide.<br>Vous allez être redirigé...";
     }
     echo "<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 3000);</script>";
+?>
+    </h3></div>
+<?php
     exit();
 ?>
