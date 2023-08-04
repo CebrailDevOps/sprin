@@ -11,9 +11,10 @@ if (isset($_GET['ref_demande'])) {
         $stmt->bindParam(':ref_demande', $ref_demande);
         $stmt->execute();
 
-        if (isset($_GET['ip_add'])) {
+        if (isset($_GET['ip_add']) AND isset($_GET['token'])) {
             $ip_add = $_GET['ip_add'];
-            header('Location: http://'.$ip_add.'/accepte2.php?ref_demande='.$ref_demande);
+            $token = $_GET['token'];
+            header('Location: http://'.$ip_add.'/accepte2.php?ref_demande='.$ref_demande.'&token='.$token);
         }
     } catch(PDOException $e) {
         echo "Connection failed: " . $e->getMessage();
