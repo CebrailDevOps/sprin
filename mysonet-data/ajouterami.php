@@ -73,7 +73,7 @@
         $date = new DateTime();
         $date = $date->format('Y-m-d H:i:s');  // Format de la date MySQL datetime
         $request = $ref_demande . ";" . $_SESSION['pseudo'] . ";" . $_SESSION['ip'] . ";" . $date;
-        $command = 'echo "' . $request . '\n" >> /home/inspectorsonet/demandes_en_attente';
+        $command = 'echo "' . $request . '" >> /home/inspectorsonet/demandes_en_attente';
 
         // Utiliser escapeshellarg pour sécuriser l'IP de l'ami
         $secure_ami_ip = escapeshellarg($ami_ip);
@@ -100,7 +100,7 @@
     $stmt->execute([$demandeur_id, $demande_id, $statut, $ref_demande]);
 
     // Communiquer la référence au demande
-    $command = 'echo "' . $ref_demande . ";" . $ami_pseudo . '\n" >> /home/inspectorsonet/demandes_envoyees';
+    $command = 'echo "' . $ref_demande . ";" . $ami_pseudo . '" >> /home/inspectorsonet/demandes_envoyees';
     $ssh_command = 'sudo ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null inspectorsonet@' . $_SESSION['ip'] . ' ' . escapeshellarg($command);
     shell_exec($ssh_command);
     
