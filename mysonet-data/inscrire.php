@@ -24,7 +24,7 @@ $idmysonet = $_POST['idmysonet']; ?>
 </head>
 <body>
     <div class="header">
-        <?php if ($_SESSION['pseudo']) {echo $_SESSION['pseudo'].' - ';} ?>MySoNet.Online
+        <?php if (isset($_SESSION['pseudo'])) {echo $_SESSION['pseudo'].' - ';} ?>MySoNet.Online
     </div>
     <div class="container">
 <?php
