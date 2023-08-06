@@ -1,20 +1,18 @@
-<?php
-    session_start();
-
-    echo '<!DOCTYPE html>
-          <html>
-          <head>
-              <title>Recherche - MySoNet.Online</title>
-              <link rel="stylesheet" href="styles.css">
-          </head>
-          <body>
-              <div class="header">MySoNet.Online</div>
-              <div class="container">';
-
+<?php session_start(); ?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recherche - MySoNet.Online</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header"><?php if ($Get_SESSION['pseudo']) {echo $Get_SESSION['pseudo'].' - ';} ?>MySoNet.Online</div>
+    <div class="container">
+<? php
     // Vérifier si l'utilisateur est connecté
     if(!isset($_SESSION['pseudo']) || !isset($_SESSION['ip'])) {
         echo "<h3>Vous devez être connecté pour rechercher de nouveaux amis. <a href='rechercher.php'>Retour à la page de connexion</a>";
-        echo "<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 3000);</script></h3></div></body>";
+        echo "<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 3000);</script></h3></div></body></html>";
         exit();
     }
 
@@ -22,12 +20,12 @@
     $pseudo = $_POST['pseudo'];
     if (!isset($pseudo)) {
         echo "<h3>Aucun pseudo fourni. <a href='rechercher.php'>Retour à la page de connexion</a>";
-        echo "<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 3000);</script></h3></div></body>";
+        echo "<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 3000);</script></h3></div></body></html>";
         exit();
     }
 
     if (!preg_match('/^[a-zA-Z0-9_-]{2,50}$/', $pseudo)) {
-        die("<h3>Le pseudo contient des caractères non autorisés ou n'a pas la longueur requise. Exemple : MonPseudo_1234<br>Vous allez être redirigé...</h3></div></body>");
+        die("<h3>Le pseudo contient des caractères non autorisés ou n'a pas la longueur requise. Exemple : MonPseudo_1234<br>Vous allez être redirigé...</h3></div></body></html>");
     }
 
     // Connexion à la base de données

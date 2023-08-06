@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="header">MySoNet.Online</div>
+    <div class="header"><?php if ($Get_SESSION['pseudo']) {echo $Get_SESSION['pseudo'].' - ';} ?>MySoNet.Online</div>
     <div class="container">
         <?php
             // Si l'utilisateur n'est pas connecté, afficher le formulaire de connexion

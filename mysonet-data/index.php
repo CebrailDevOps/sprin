@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -8,10 +9,10 @@
 </head>
 <body>
     <div class="header">
-        MySoNet.Online
+        <?php if ($Get_SESSION['pseudo']) {echo $Get_SESSION['pseudo'].' - ';} ?>MySoNet.Online
     </div>
     <div class="content">
-        <div><a href="inscription.html">S'inscrire</a></div>
+        <div><a href="inscription.php">S'inscrire</a></div>
         <div><a href="rechercher.php">Rechercher un ami</a></div>
     </div>
 </body>
