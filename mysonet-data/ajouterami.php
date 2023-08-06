@@ -20,8 +20,8 @@
 <?php
     // Vérifier si l'utilisateur est connecté
     if(!isset($_SESSION['pseudo']) || !isset($_SESSION['ip'])) {
-        echo "Vous devez être connecté pour ajouter un nouvel ami. <a href='connexion.php'>Retour à la page de connexion</a>";
-        echo "<script>setTimeout(function(){window.location.href = 'connexion.php';}, 3000);</script></h3></div>";
+        echo "Vous devez être connecté pour ajouter un nouvel ami. <a href='rechercher.php'>Retour à la page de connexion</a>";
+        echo "<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 5000);</script></h3></div>";
         exit();
     }
 
@@ -35,7 +35,7 @@
 
     // Si l'ami n'existe pas dans la base de données
     if ($ami_ip === false) {
-        die("L'utilisateur demandé n'existe pas.<br>Vous allez être redirigé...<script>setTimeout(function(){window.location.href = 'connexion.php';}, 3000);</script></h3></div>");
+        die("L'utilisateur demandé n'existe pas.<br>Vous allez être redirigé...<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 5000);</script></h3></div>");
     }
 
     // Récupérer les ID des utilisateurs en fonction de leurs pseudos
@@ -51,7 +51,7 @@
     $demande_existante = $stmt->fetch();
 
     if ($demande_existante) {
-        die("Une demande d'ami similaire existe déjà.<br>Vous allez être redirigé...<script>setTimeout(function(){window.location.href = 'connexion.php';}, 3000);</script></h3></div>");
+        die("Une demande d'ami similaire existe déjà.<br>Vous allez être redirigé...<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 5000);</script></h3></div>");
     }
 
     //Anti-injections Commande Shell
@@ -91,7 +91,7 @@
 
         // Vérifier que la demande d'ami a été correctement enregistrée
         if ($last_request !== $ref_demande) {
-            die("La demande d'ami n'a pas été correctement enregistrée. Veuillez réessayer.<br>Vous allez être redirigé...<script>setTimeout(function(){window.location.href = 'connexion.php';}, 3000);</script></h3></div>");
+            die("La demande d'ami n'a pas été correctement enregistrée. Veuillez réessayer.<br>Vous allez être redirigé...<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 5000);</script></h3></div>");
         }
     }
 
@@ -104,5 +104,5 @@
     $ssh_command = 'sudo ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null inspectorsonet@' . $_SESSION['ip'] . ' ' . escapeshellarg($command);
     shell_exec($ssh_command);
     
-    echo "Demande d'ami envoyée à " . htmlspecialchars($ami_pseudo, ENT_QUOTES, 'UTF-8') . ".<br>Vous allez être redirigé...<script>setTimeout(function(){window.location.href = 'connexion.php';}, 3000);</script></h3></div>";
+    echo "Demande d'ami envoyée à " . htmlspecialchars($ami_pseudo, ENT_QUOTES, 'UTF-8') . ".<br>Vous allez être redirigé...<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 5000);</script></h3></div>";
 ?>

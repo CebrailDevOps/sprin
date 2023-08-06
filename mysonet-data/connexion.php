@@ -17,7 +17,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Connexion et Recherche - MySoNet.Online</title>
+    <title>Connexion - MySoNet.Online</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -26,15 +26,15 @@
 <?php
     // Validation des entrées
     if (!preg_match('/^[a-zA-Z0-9_-]{2,50}$/', $pseudo)) {
-        die("Le pseudo contient des caractères non autorisés ou n'a pas la longueur requise.<br>Exemple : MonPseudo_1234<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 3000);</script><br>Vous allez être redirigé...");
+        die("Le pseudo contient des caractères non autorisés ou n'a pas la longueur requise.<br>Exemple : MonPseudo_1234<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 5000);</script><br>Vous allez être redirigé...</h3></div></body></html>");
     }
 
     if (!filter_var($ip, FILTER_VALIDATE_IP)) {
-        die("L'adresse IP n'est pas valide.<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 3000);</script><br>Vous allez être redirigé...");
+        die("L'adresse IP n'est pas valide.<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 3000);</script><br>Vous allez être redirigé...</h3></div></body></html>");
     }
 
     if (!preg_match('/^[a-zA-Z0-9_-]{2,50}$/', $idmysonet)) {
-        die("L'ID MySonet contient des caractères non autorisés ou n'a pas la longueur requise.<br>Exemple : MonID_1234<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 3000);</script><br>Vous allez être redirigé...");
+        die("L'ID MySonet contient des caractères non autorisés ou n'a pas la longueur requise.<br>Exemple : MonID_1234<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 5000);</script><br>Vous allez être redirigé...</h3></div></body></html>");
     }
 
     // Connexion à la base de données
@@ -70,9 +70,9 @@
         // l'utilisateur n'existe pas
         echo "Pseudo ou IP invalide.<br>Vous allez être redirigé...";
     }
-    echo "<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 3000);</script>";
+    echo "<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 5000);</script>";
 ?>
-    </h3></div>
+    </h3></div></body></html>
 <?php
     exit();
 ?>

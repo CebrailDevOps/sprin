@@ -12,7 +12,7 @@
     // Vérifier si l'utilisateur est connecté
     if(!isset($_SESSION['pseudo']) || !isset($_SESSION['ip'])) {
         echo "<h3>Vous devez être connecté pour rechercher de nouveaux amis. <a href='rechercher.php'>Retour à la page de connexion</a>";
-        echo "<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 3000);</script></h3></div></body></html>";
+        echo "<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 5000);</script></h3></div></body></html>";
         exit();
     }
 
@@ -20,12 +20,12 @@
     $pseudo = $_POST['pseudo'];
     if (!isset($pseudo)) {
         echo "<h3>Aucun pseudo fourni. <a href='rechercher.php'>Retour à la page de connexion</a>";
-        echo "<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 3000);</script></h3></div></body></html>";
+        echo "<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 5000);</script></h3></div></body></html>";
         exit();
     }
 
     if (!preg_match('/^[a-zA-Z0-9_-]{2,50}$/', $pseudo)) {
-        die("<h3>Le pseudo contient des caractères non autorisés ou n'a pas la longueur requise. Exemple : MonPseudo_1234<br>Vous allez être redirigé...</h3></div></body></html>");
+        die("<h3>Le pseudo contient des caractères non autorisés ou n'a pas la longueur requise. Exemple : MonPseudo_1234<br>Vous allez être redirigé...<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 5000);</script></h3></div></body></html>");
     }
 
     // Connexion à la base de données

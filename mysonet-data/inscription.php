@@ -20,5 +20,8 @@
             <input type="submit" value="S'inscrire">
         </form>
     </div>
+    <div class="content">
+        <div><a href="index.php">Retour</a></div>
+    </div>
 </body>
 </html>

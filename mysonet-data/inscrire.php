@@ -38,19 +38,19 @@ $stmt = $pdo->prepare("SELECT * FROM mysonetusers WHERE username = ?");
 $stmt->execute([$pseudo]);
 
 if ($stmt->rowCount() > 0) {
-    die("Le pseudo existe déjà. Choisissez-en un autre. S''il vous appartient et que vous avez une nouvelle IP, vous ne pourrez pas le supprimer de la liste vous-même.<br>Pour ce faire, inscrivez-vous avec un nouveau pseudo et faites une demande d'ami à votre ancien pseudo.<br>Dans 15 jours, celui-ci sera supprimé.<br>Vous devrez vous réinscrire avec votre ancien pseudo.</div></body></html>");
+    die("Le pseudo existe déjà. Choisissez-en un autre. S''il vous appartient et que vous avez une nouvelle IP, vous ne pourrez pas le supprimer de la liste vous-même.<br>Pour ce faire, inscrivez-vous avec un nouveau pseudo et faites une demande d'ami à votre ancien pseudo.<br>Dans 15 jours, celui-ci sera supprimé.<br>Vous devrez vous réinscrire avec votre ancien pseudo.<br>Vous allez être redirigé...<script>setTimeout(function(){window.location.href = 'inscription.php';}, 5000);</script></div></body></html>");
 }
 
 // Vérifiez si l'IP est unique et valide
 if (!filter_var($ip, FILTER_VALIDATE_IP)) {
-    die("L'adresse IP n'est pas valide.");
+    die("L'adresse IP n'est pas valide.<br>Vous allez être redirigé...<script>setTimeout(function(){window.location.href = 'inscription.php';}, 5000);</script></div></body></html>");
 }
 
 $stmt = $pdo->prepare("SELECT * FROM mysonetusers WHERE ip_add = ?");
 $stmt->execute([$ip]);
 
 if ($stmt->rowCount() > 0) {
-    die("L'IP existe déjà dans la liste. Vous vous êtes déjà inscrit.<br>Si vous voulez vous inscrire avec un nouveau pseudo, supprimez-le de la liste et refaites une nouvelle inscription.</div></body></html>");
+    die("L'IP existe déjà dans la liste. Vous vous êtes déjà inscrit.<br>Si vous voulez vous inscrire avec un nouveau pseudo, supprimez-le de la liste et refaites une nouvelle inscription.<br>Vous allez être redirigé...<script>setTimeout(function(){window.location.href = 'inscription.php';}, 5000);</script></div></body></html>");
 }
 
 //Anti-injections Commande Shell
@@ -79,7 +79,7 @@ $stmt = $pdo->prepare("INSERT INTO mysonetusers (username, ip_add) VALUES (?, ?)
 $stmt->execute([$pseudo, $ip]);
         echo "Inscription réussie !<br>";
         echo "Vous allez être redirigé...<br>";
-        echo "<script>setTimeout(function(){window.location.href = 'inscription.php';}, 5000);</script>";
+        echo "<script>setTimeout(function(){window.location.href = 'index.php';}, 5000);</script>";
         ?>
     </div>
 </body>
