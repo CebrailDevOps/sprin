@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="header"><?php if ($Get_SESSION['pseudo']) {echo $Get_SESSION['pseudo'].' - ';} ?>MySoNet.Online</div>
+    <div class="header"><?php if ($_SESSION['pseudo']) {echo $_SESSION['pseudo'].' - ';} ?>MySoNet.Online</div>
     <div class="container"><h3>
 <?php
     // Validation des entrées

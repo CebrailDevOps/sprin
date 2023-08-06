@@ -7,7 +7,7 @@
 </head>
 <body>
     <div class="header">
-        <?php if ($Get_SESSION['pseudo']) {echo $Get_SESSION['pseudo'].' - ';} ?>MySoNet.Online
+        <?php if ($_SESSION['pseudo']) {echo $_SESSION['pseudo'].' - ';} ?>MySoNet.Online
     </div>
     <div class="container">
         <form action="inscrire.php" method="post">
