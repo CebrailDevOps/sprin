@@ -27,10 +27,10 @@
     if (!preg_match('/^[a-zA-Z0-9_-]{2,50}$/', $pseudo)) {
         die("<h3>Le pseudo contient des caractères non autorisés ou n'a pas la longueur requise. Exemple : MonPseudo_1234<br>Vous allez être redirigé...<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 5000);</script></h3></div></body></html>");
     }
-
+    include 'db.php';
     // Connexion à la base de données
-    $dbh = new PDO('mysql:host=db;dbname=mysonet', 'mysonet', '123456a.');
-
+    $dbh = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     // Requête pour rechercher des utilisateurs
     $stmt = $dbh->prepare("SELECT username FROM mysonetusers WHERE username LIKE :pseudo");
     $pseudoLike = "%" . $pseudo . "%";

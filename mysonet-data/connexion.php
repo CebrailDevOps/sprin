@@ -36,9 +36,9 @@
     if (!preg_match('/^[a-zA-Z0-9_-]{2,50}$/', $idmysonet)) {
         die("L'ID MySonet contient des caractères non autorisés ou n'a pas la longueur requise.<br>Exemple : MonID_1234<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 5000);</script><br>Vous allez être redirigé...</h3></div></body></html>");
     }
-
+    include 'db.php';
     // Connexion à la base de données
-    $dbh = new PDO('mysql:host=db;dbname=mysonet', 'mysonet', '123456a.');
+    $dbh = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 
     // Requête pour vérifier si l'utilisateur existe
     $stmt = $dbh->prepare("SELECT * FROM mysonetusers WHERE username = :pseudo AND ip_add = :ip");

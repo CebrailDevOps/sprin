@@ -1,17 +1,6 @@
 <?php session_start();
-$host = 'db';  // nom du service MySQL dans le fichier docker-compose.yml
-$db   = 'mysonet';
-$user = 'mysonet';
-$pass = '123456a.';
-$charset = 'utf8mb4';
-
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-$opt = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES   => false,
-];
-$pdo = new PDO($dsn, $user, $pass, $opt);
+include 'db.php';
+$pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 
 $pseudo = $_POST['pseudo'];
 $ip = $_POST['ip'];

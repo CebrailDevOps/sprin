@@ -3,7 +3,8 @@ if (isset($_GET['ref_demande'])) {
     $ref_demande = $_GET['ref_demande'];
 
     try {
-        $conn = new PDO('mysql:host=db;dbname=mysonet', 'mysonet', '123456a.');
+        include 'db.php';
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // Supprimer la demande d'ami
