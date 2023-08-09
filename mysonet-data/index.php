@@ -10,7 +10,7 @@
 <body>
     <div class="header">
         <?php if (isset($_SESSION['pseudo'])): ?>
-            <span></span>
+            <div></div>
         <?php endif; ?>
         <span><?php if (isset($_SESSION['pseudo'])) {echo $_SESSION['pseudo'].' - ';} ?>MySoNet.Online</span>
         <?php if (isset($_SESSION['pseudo'])): ?>
