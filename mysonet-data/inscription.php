@@ -7,7 +7,13 @@
 </head>
 <body>
     <div class="header">
-        <?php if (isset($_SESSION['pseudo'])) {echo $_SESSION['pseudo'].' - ';} ?>MySoNet.Online
+        <?php if (isset($_SESSION['pseudo'])): ?>
+            <div></div>
+        <?php endif; ?>
+        <span><?php if (isset($_SESSION['pseudo'])) {echo $_SESSION['pseudo'].' - ';} ?>MySoNet.Online</span>
+        <?php if (isset($_SESSION['pseudo'])): ?>
+            <a href="logout.php" class="power-btn"><img src="power.svg" alt="Logout"></a>
+        <?php endif; ?>
     </div>
     <div class="container">
         <form action="inscrire.php" method="post">
