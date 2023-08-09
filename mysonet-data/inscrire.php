@@ -1,6 +1,4 @@
 <?php session_start();
-include 'db.php';
-$pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 
 $pseudo = $_POST['pseudo'];
 $ip = $_POST['ip'];
@@ -23,6 +21,13 @@ if (!preg_match('/^[a-zA-Z0-9_-]{2,50}$/', $pseudo)) {
     die("Le pseudo contient des caractères non autorisés ou n'a pas la longueur requise. Exemple : MonPseudo_1234<br>Vous allez être redirigé...<script>setTimeout(function(){window.location.href = 'inscription.php';}, 5000);</script></div></body></html>");
 }
 
+include 'db.php';
+try {
+    $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch(PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+}
 $stmt = $pdo->prepare("SELECT * FROM mysonetusers WHERE username = ?");
 $stmt->execute([$pseudo]);
 
