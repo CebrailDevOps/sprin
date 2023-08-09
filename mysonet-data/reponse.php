@@ -4,11 +4,11 @@ if (isset($_GET['ref_demande'])) {
 
     try {
         include 'db.php';
-        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // Supprimer la demande d'ami
-        $stmt = $conn->prepare("DELETE FROM demandes_ami WHERE ref_demande = :ref_demande");
+        $stmt = $pdo->prepare("DELETE FROM demandes_ami WHERE ref_demande = :ref_demande");
         $stmt->bindParam(':ref_demande', $ref_demande);
         $stmt->execute();
 

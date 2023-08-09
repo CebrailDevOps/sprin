@@ -22,12 +22,7 @@ if (!preg_match('/^[a-zA-Z0-9_-]{2,50}$/', $pseudo)) {
 }
 
 include 'db.php';
-try {
-    $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch(PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
-}
+
 $stmt = $pdo->prepare("SELECT * FROM mysonetusers WHERE username = ?");
 $stmt->execute([$pseudo]);
 

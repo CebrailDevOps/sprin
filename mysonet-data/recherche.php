@@ -28,11 +28,9 @@
         die("<h3>Le pseudo contient des caractères non autorisés ou n'a pas la longueur requise. Exemple : MonPseudo_1234<br>Vous allez être redirigé...<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 5000);</script></h3></div></body></html>");
     }
     include 'db.php';
-    // Connexion à la base de données
-    $dbh = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
     // Requête pour rechercher des utilisateurs
-    $stmt = $dbh->prepare("SELECT username FROM mysonetusers WHERE username LIKE :pseudo");
+    $stmt = $pdo->prepare("SELECT username FROM mysonetusers WHERE username LIKE :pseudo");
     $pseudoLike = "%" . $pseudo . "%";
     $stmt->bindParam(':pseudo', $pseudoLike, PDO::PARAM_STR);
     $stmt->execute();
@@ -43,14 +41,14 @@
         $ami_pseudo = htmlspecialchars($row['username'], ENT_QUOTES, 'UTF-8');
 
         // Récupérer les ID des utilisateurs en fonction de leurs pseudos
-        $stmt2 = $dbh->prepare("SELECT id FROM mysonetusers WHERE username = ?");
+        $stmt2 = $pdo->prepare("SELECT id FROM mysonetusers WHERE username = ?");
         $stmt2->execute([$_SESSION['pseudo']]);
         $demandeur_id = $stmt2->fetchColumn();
         $stmt2->execute([$ami_pseudo]);
         $demande_id = $stmt2->fetchColumn();
 
         // Vérifier si une demande d'ami existe
-        $stmt2 = $dbh->prepare("SELECT statut FROM demandes_ami WHERE id_demandeur = ? AND id_demande = ?");
+        $stmt2 = $pdo->prepare("SELECT statut FROM demandes_ami WHERE id_demandeur = ? AND id_demande = ?");
         $stmt2->execute([$demandeur_id, $demande_id]);
         $statut_demande = $stmt2->fetchColumn();
 
