@@ -4,15 +4,13 @@ if (isset($_GET['ref_demande'])) {
 
     try {
         include 'db.php';
-        $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
+        
         // Supprimer la demande d'ami
         $stmt = $pdo->prepare("DELETE FROM demandes_ami WHERE ref_demande = :ref_demande");
         $stmt->bindParam(':ref_demande', $ref_demande);
         $stmt->execute();
 
-        if (isset($_GET['ip_add']) AND isset($_GET['token'])) {
+        if (isset($_GET['ip_add']) && isset($_GET['token'])) {
             $ip_add = $_GET['ip_add'];
             $token = $_GET['token'];
             header('Location: http://'.$ip_add.'/accepte2.php?ref_demande='.$ref_demande.'&token='.$token);
