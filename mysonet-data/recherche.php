@@ -8,9 +8,9 @@
 <body>
     <div class="header"><?php if (isset($_SESSION['pseudo'])) {echo $_SESSION['pseudo'].' - ';} ?>MySoNet.Online</div>
     <div class="container">
-<? php
+<?php
     // Vérifier si l'utilisateur est connecté
-    if(!isset($_SESSION['pseudo']) || !isset($_SESSION['ip'])) {
+    if (!isset($_SESSION['pseudo']) || !isset($_SESSION['ip'])) {
         echo "<h3>Vous devez être connecté pour rechercher de nouveaux amis. <a href='rechercher.php'>Retour à la page de connexion</a>";
         echo "<script>setTimeout(function(){window.location.href = 'rechercher.php';}, 5000);</script></h3></div></body></html>";
         exit();
@@ -30,9 +30,10 @@
     include 'db.php';
     
     // Requête pour rechercher des utilisateurs
-    $stmt = $pdo->prepare("SELECT username FROM mysonetusers WHERE username LIKE :pseudo");
+    $stmt = $pdo->prepare("SELECT username FROM mysonetusers WHERE username LIKE :pseudo AND username != :sessionPseudo");
     $pseudoLike = "%" . $pseudo . "%";
     $stmt->bindParam(':pseudo', $pseudoLike, PDO::PARAM_STR);
+    $stmt->bindParam(':sessionPseudo', $_SESSION['pseudo'], PDO::PARAM_STR);
     $stmt->execute();
 
     // Afficher les résultats
