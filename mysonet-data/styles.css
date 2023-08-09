@@ -11,7 +11,23 @@ body {
     padding: 10px;
     text-align: center;
     font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
+
+.header span {
+  margin: 0 auto;
+}
+
+.power-btn {
+  font-size: 1.5rem;
+  margin-left: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
 
 .content {
     display: flex;

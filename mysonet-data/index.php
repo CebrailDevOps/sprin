@@ -9,7 +9,11 @@
 </head>
 <body>
     <div class="header">
-        <?php if (isset($_SESSION['pseudo'])) {echo $_SESSION['pseudo'].' - ';} ?>MySoNet.Online
+        <?php if (isset($_SESSION['pseudo'])) {echo $_SESSION['pseudo'].' - ';} ?>
+        <span>MySoNet.Online</span>
+        <?php if (isset($_SESSION['pseudo'])): ?>
+            <a href="logout.php" class="power-btn">🔌</a>
+        <?php endif; ?>
     </div>
     <div class="content">
         <div><a href="inscription.php">S'inscrire</a></div>
