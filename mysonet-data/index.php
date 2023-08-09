@@ -9,10 +9,9 @@
 </head>
 <body>
     <div class="header">
-        <?php if (isset($_SESSION['pseudo'])) {echo $_SESSION['pseudo'].' - ';} ?>
-        <span>MySoNet.Online</span>
+        <span></span><span><?php if (isset($_SESSION['pseudo'])) {echo $_SESSION['pseudo'].' - ';} ?>MySoNet.Online</span>
         <?php if (isset($_SESSION['pseudo'])): ?>
-            <a href="logout.php" class="power-btn">🔌</a>
+            <a href="logout.php" class="power-btn"><img src="logout.svg" alt="Logout"></a>
         <?php endif; ?>
     </div>
     <div class="content">

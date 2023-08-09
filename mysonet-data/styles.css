@@ -21,13 +21,14 @@ body {
 }
 
 .power-btn {
-  font-size: 1.5rem;
   margin-left: auto;
-  background: none;
-  border: none;
   cursor: pointer;
 }
 
+.power-btn img {
+  width: 30px;
+  height: 30px;
+}
 
 .content {
     display: flex;
