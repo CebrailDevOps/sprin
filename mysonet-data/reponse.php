@@ -13,7 +13,7 @@ if (isset($_GET['ref_demande'])) {
         $ip_add = $_GET['ip_add'];
         $token = $_GET['token'];
         header('Location: http://'.$ip_add.'/accepte2.php?ref_demande='.$ref_demande.'&token='.$token);
-    } if (isset($_GET['ip_add'])) {
+    } elseif (isset($_GET['ip_add'])) {
         $ip_add = $_GET['ip_add'];
         header('Location: http://'.$ip_add.'/notif.php');
     }
