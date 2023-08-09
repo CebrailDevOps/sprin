@@ -56,7 +56,7 @@
             $file_content=shell_exec("sudo ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null inspectorsonet@" . $secure_ip . " 'cat /home/inspectorsonet/idmysonet' | tail -n 1");
             if (trim($file_content) == $idmysonet) {
                 // l'utilisateur est connecté
-                echo "Vous êtes maintenant connecté.";
+                echo "Vous êtes maintenant connecté.<br>Vous allez être redirigé...";
                 // stocker l'information de connexion dans la session
                 $_SESSION['pseudo'] = $pseudo;
                 $_SESSION['ip'] = $ip;
