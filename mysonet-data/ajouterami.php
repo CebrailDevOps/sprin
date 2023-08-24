@@ -12,11 +12,9 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="header">
-        <?php if (isset($_SESSION['pseudo'])): ?>
-            <div></div>
-        <?php endif; ?>
-        <span><?php if (isset($_SESSION['pseudo'])) {echo $_SESSION['pseudo'].' - ';} ?>MySoNet.Online</span>
+    <div class="header">
+        <div></div><span>
+        <?php if (isset($_SESSION['pseudo'])) {echo $_SESSION['pseudo'].' - ';} ?>MySoNet.Online</span>
         <?php if (isset($_SESSION['pseudo'])): ?>
             <a href="logout.php" class="power-btn"><img src="power.svg" alt="Logout"></a>
         <?php endif; ?>
