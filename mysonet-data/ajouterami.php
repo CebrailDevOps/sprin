@@ -15,9 +15,9 @@
     <div class="header">
         <div></div><span>
         <?php if (isset($_SESSION['pseudo'])) {echo $_SESSION['pseudo'].' - ';} ?>MySoNet.Online</span>
-        <?php if (isset($_SESSION['pseudo'])): ?>
+        <div><?php if (isset($_SESSION['pseudo'])): ?>
             <a href="logout.php" class="power-btn"><img src="power.svg" alt="Logout"></a>
-        <?php endif; ?>
+        <?php endif; ?></div>
     </div>
     <div class="container"><h3>
 
